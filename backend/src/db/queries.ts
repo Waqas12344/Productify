@@ -101,11 +101,10 @@ export const createComment = async (data: NewComment) => {
 };
 
 export const deleteComment = async (id: string) => {
-
-    const existingCommnet = await getCommentById(id);
-    if(!existingCommnet){
-        throw new Error(`Comment with id ${id} not found`)
-    }
+  const existingCommnet = await getCommentById(id);
+  if (!existingCommnet) {
+    throw new Error(`Comment with id ${id} not found`);
+  }
 
   const [comment] = await db
     .delete(comments)
