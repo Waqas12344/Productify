@@ -8,7 +8,6 @@
     "strict": true, // Enables all strict type-checking
     "skipLibCheck": true, // Skips type-checking .d.ts files (faster builds)
     "moduleResolution": "node", // How TS finds modules (node_modules lookup)
-    "ignoreDeprecations": "6.0", // Suppress deprecation warnings for TS 6.x compatibility
     "resolveJsonModule": true, // Allows importing .json files
     "forceConsistentCasingInFileNames": true // Prevents case-sensitivity bugs
   },
