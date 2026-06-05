@@ -6,7 +6,10 @@ import ProductsPage from './pages/ProductPage';
 import ProfilePage from './pages/ProfilePage';
 import CreatePage from './pages/CreatePage';
 import EditProductPage from './pages/EditProductPage';
+
+
 function App() {
+  
   return <>
   <div className="min-h-screen bg-base-100">
     <Navbar />
