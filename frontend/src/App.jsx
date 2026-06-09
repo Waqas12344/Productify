@@ -1,6 +1,6 @@
 import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/react'
 import Navbar from './components/Navbar';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductPage';
 import ProfilePage from './pages/ProfilePage';
@@ -23,9 +23,9 @@ function App() {
     <main className="max-w-5xl mx-auto py-8 px-4">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/products/:id" element={<ProductsPage />} />
+        <Route path="/product/:id" element={<ProductsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/create" element={<CreatePage />} />
+        <Route path="/create" element={isSignedIn? <CreatePage />: <Navigate to={'/'} />} />
         <Route path="/edit/:id" element={<EditProductPage />} />
 
       </Routes>
