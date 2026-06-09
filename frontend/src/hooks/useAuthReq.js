@@ -2,26 +2,32 @@ import { useAuth } from "@clerk/react";
 import { useEffect } from "react";
 import api from "../lib/axios";
 
-const useAuthReq = () => {
-    const {isSignedIn, getToken, isLoaded} = useAuth();
+let isInterceptorRegistered = false;
 
-    useEffect(() => {
-        const interceptor = api.interceptors.request.use(async (config) => {
-            if (isSignedIn) {
-                const token = await getToken();
-                if(token) {
-                    config.headers.Authorization = `Bearer ${token}`;
-                }
-            }
-            return config;
-        });
+function useAuthReq() {
+  const { isSignedIn, getToken, isLoaded } = useAuth();
+  // include the token to the request headers
+  useEffect(() => {
+    if (isInterceptorRegistered) return;
+    isInterceptorRegistered = true;
 
-        return () => {
-            api.interceptors.request.eject(interceptor);
-        };
-    }, [ isSignedIn, getToken]);
+    const interceptor = api.interceptors.request.use(async (config) => {
+      if (isSignedIn) {
+        const token = await getToken();
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      }
+      return config;
+    });
 
-  return {isSignedIn, isClerkLoaded: isLoaded};
+    return () => {
+      api.interceptors.request.eject(interceptor);
+      isInterceptorRegistered = false;
+    };
+  }, [isSignedIn, getToken]);
+
+  return { isSignedIn, isClerkLoaded: isLoaded };
 }
 
-export default useAuthReq
+export default useAuthReq;
